@@ -7,10 +7,14 @@ public class Student {
     // Student.java
 
     private String name;
-    private List<Availability> availabilities;
+    private String major;
+    private List<String> courses;
+    private List<models.Availability> availabilities;
 
-    public Student(String name) {
+    public Student(String name, String major) {
         this.name = name;
+        this.major = major;
+        this.courses = new ArrayList<>();
         this.availabilities = new ArrayList<>();
     }
 
@@ -18,8 +22,39 @@ public class Student {
             return name;
     }
 
-    public List<Availability> getAvailabilities() {
+    public String getMajor() { return major;}
+
+    public List<models.Availability> getAvailabilities() {
         return availabilities;
+    }
+
+    public List<String> getCourses() {
+        return courses;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public void addCourse(String course) {
+        if (!courses.contains(course)) {
+            courses.add(course);
+            System.out.println("Added course: " + course);
+        } else {
+            System.out.println("That course is already enrolled.");
+        }
+    }
+
+    public void removeCourse(String course) {
+        if (courses.remove(course)) {
+            System.out.println("Removed course: " + course);
+        } else {
+            System.out.println("Course not found.");
+        }
     }
 
         // Story 2.1 - Add availability
@@ -43,6 +78,17 @@ public class Student {
         }
     }
 
+    // Helper to show courses
+    public void printCourses() {
+        if (courses.isEmpty()) {
+            System.out.println(name + " is not enrolled in any courses.");
+        } else {
+            System.out.println(name + "'s Courses:");
+            for (String c : courses) {
+                System.out.println(" - " + c);
+            }
+        }
+    }
     // Helper to show availabilities
     public void printAvailabilities() {
         if (availabilities.isEmpty()) {
@@ -53,6 +99,16 @@ public class Student {
                 System.out.println(" - " + a);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", major='" + major + '\'' +
+                ", courses=" + courses + '\'' +
+                ", availability" + availabilities +
+                '}';
     }
 }
 
