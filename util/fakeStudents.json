@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Bob",
+    "major": "Computer Science",
+    "courses": ["CPSC 1010"],
+    "availability": {
+      "Monday": "7PM-8PM",
+      "Tuesday": "6PM-7PM",
+      "Wednesday": "5PM-6PM",
+      "Thursday": "6PM-7PM",
+      "Friday": "4PM-5PM"
+    }
+  },
+  {
+    "name": "Charlie",
+    "major": "Mathematics",
+    "courses": ["MATH 2080"],
+    "availability": {
+      "Monday": "6PM-7PM",
+      "Tuesday": "5PM-6PM",
+      "Wednesday": "7PM-8PM",
+      "Thursday": "4PM-5PM",
+      "Friday": "6PM-7PM"
+    }
+  },
+  {
+    "name": "Dana",
+    "major": "Physics",
+    "courses": ["PHYS 1010"],
+    "availability": {
+      "Monday": "5PM-6PM",
+      "Tuesday": "7PM-8PM",
+      "Wednesday": "6PM-7PM",
+      "Thursday": "5PM-6PM",
+      "Friday": "7PM-8PM"
+    }
+  },
+  {
+    "name": "Eli",
+    "major": "Chemistry",
+    "courses": ["CHEM 1100"],
+    "availability": {
+      "Monday": "6PM-7PM",
+      "Tuesday": "6PM-7PM",
+      "Wednesday": "6PM-7PM",
+      "Thursday": "6PM-7PM",
+      "Friday": "6PM-7PM"
+    }
+  },
+  {
+    "name": "Fiona",
+    "major": "Biology",
+    "courses": ["BIO 1010"],
+    "availability": {
+      "Monday": "7PM-8PM",
+      "Tuesday": "7PM-8PM",
+      "Wednesday": "7PM-8PM",
+      "Thursday": "7PM-8PM",
+      "Friday": "7PM-8PM"
+    }
+  },
+  {
+    "name": "George",
+    "major": "Economics",
+    "courses": ["ECON 2010"],
+    "availability": {
+      "Monday": "5PM-6PM",
+      "Tuesday": "5PM-6PM",
+      "Wednesday": "5PM-6PM",
+      "Thursday": "5PM-6PM",
+      "Friday": "5PM-6PM"
+    }
+  },
+  {
+    "name": "Hannah",
+    "major": "English",
+    "courses": ["ENG 1010"],
+    "availability": {
+      "Monday": "6PM-7PM",
+      "Tuesday": "6PM-7PM",
+      "Wednesday": "6PM-7PM",
+      "Thursday": "6PM-7PM",
+      "Friday": "6PM-7PM"
+    }
+  },
+  {
+    "name": "Ian",
+    "major": "Computer Science",
+    "courses": ["CPSC 2150"],
+    "availability": {
+      "Monday": "7PM-8PM",
+      "Tuesday": "7PM-8PM",
+      "Wednesday": "7PM-8PM",
+      "Thursday": "7PM-8PM",
+      "Friday": "7PM-8PM"
+    }
+  },
+  {
+    "name": "Julia",
+    "major": "Mathematics",
+    "courses": ["MATH 2080"],
+    "availability": {
+      "Monday": "5PM-6PM",
+      "Tuesday": "5PM-6PM",
+      "Wednesday": "5PM-6PM",
+      "Thursday": "5PM-6PM",
+      "Friday": "5PM-6PM"
+    }
+  },
+  {
+    "name": "Kevin",
+    "major": "Physics",
+    "courses": ["PHYS 1010"],
+    "availability": {
+      "Monday": "6PM-7PM",
+      "Tuesday": "6PM-7PM",
+      "Wednesday": "6PM-7PM",
+      "Thursday": "6PM-7PM",
+      "Friday": "6PM-7PM"
+    }
+  }
+]
