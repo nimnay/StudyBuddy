@@ -1,0 +1,50 @@
+[
+  {
+    "sessionId": "S1",
+    "course": "CPSC 1010",
+    "time": "Monday 7PM-8PM",
+    "students": ["Bob", "Fiona", "Ian"]
+  },
+  {
+    "sessionId": "S2",
+    "course": "MATH 2080",
+    "time": "Tuesday 5PM-6PM",
+    "students": ["Charlie", "Julia", "George"]
+  },
+  {
+    "sessionId": "S3",
+    "course": "PHYS 1010",
+    "time": "Wednesday 6PM-7PM",
+    "students": ["Dana", "Kevin", "Hannah"]
+  },
+  {
+    "sessionId": "S4",
+    "course": "CHEM 1100",
+    "time": "Thursday 6PM-7PM",
+    "students": ["Eli", "Hannah", "Kevin"]
+  },
+  {
+    "sessionId": "S5",
+    "course": "BIO 1010",
+    "time": "Friday 7PM-8PM",
+    "students": ["Fiona", "Dana", "Ian"]
+  },
+  {
+    "sessionId": "S6",
+    "course": "ECON 2010",
+    "time": "Monday 5PM-6PM",
+    "students": ["George", "Julia", "Dana"]
+  },
+  {
+    "sessionId": "S7",
+    "course": "ENG 1010",
+    "time": "Tuesday 6PM-7PM",
+    "students": ["Hannah", "Eli", "Kevin"]
+  },
+  {
+    "sessionId": "S8",
+    "course": "CPSC 2150",
+    "time": "Wednesday 7PM-8PM",
+    "students": ["Ian", "Bob", "Fiona"]
+  }
+]
