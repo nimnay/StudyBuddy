@@ -9,8 +9,15 @@ import java.util.Scanner;
 
 public class StudyBuddyMain {
     public static void main(String[] args) {
+
         String name, major;
         Scanner scanner = new Scanner(System.in);
+
+        // Setup directories and load data
+        controller.StudentDirectory studentDirectory = new controller.StudentDirectory();
+        studentDirectory.loadFakeStudents();
+        controller.SessionDirectory sessionDirectory = new controller.SessionDirectory();
+        sessionDirectory.loadSampleSessions(studentDirectory);
 
         System.out.println("Welcome to StudyBuddy! Let's create your profile to get started.\n");
 
@@ -47,8 +54,9 @@ public class StudyBuddyMain {
             System.out.println("3. Add availability");
             System.out.println("4. Remove availability");
             System.out.println("5. View Profile");
-            System.out.println("6. Create Study Session");
-            System.out.println("7. Browse Study Sessions");
+            System.out.println("6. Browse Students");
+            System.out.println("7. Create Study Session");
+            System.out.println("8. Browse Study Sessions");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
@@ -100,12 +108,44 @@ public class StudyBuddyMain {
                     break;
                 }
                 case 6: {
-                    System.out.println("\n📅 Create Study Session feature coming soon...");
+                    System.out.println("\n=== All Students ===");
+                    studentDirectory.printStudents();
                     break;
                 }
                 case 7: {
-                    System.out.println("\n🔍 Browse Study Sessions feature coming soon...");
+                    System.out.println("\n📅 Create Study Session");
+                    System.out.print("Enter course for the session: ");
+                    String sessionCourse = scanner.nextLine();
+                    System.out.print("Enter day of week for the session: ");
+                    String sessionDay = scanner.nextLine();
+                    System.out.print("Enter time slot for the session: ");
+                    String sessionTime = scanner.nextLine();
+                    String sessionDateTime = sessionDay + " " + sessionTime;
+                    models.StudySession session = new models.StudySession(ourStudent, sessionCourse, sessionDateTime);
+
+                    System.out.print("Enter name of participant to invite: ");
+                    String participantName = scanner.nextLine();
+                    System.out.print("Enter major of participant: ");
+                    String participantMajor = scanner.nextLine();
+                    models.Student participant = new models.Student(participantName, participantMajor);
+                    System.out.println("Add availability for participant (at least one should match session time):");
+                    boolean addAvail = true;
+                    while (addAvail) {
+                        System.out.print("Enter day of week (or 'done'): ");
+                        String pDay = scanner.nextLine();
+                        if (pDay.equalsIgnoreCase("done")) break;
+                        System.out.print("Enter time slot: ");
+                        String pTime = scanner.nextLine();
+                        participant.addAvailability(pDay, pTime);
+                    }
+                    session.addParticipant(participant);
                     break;
+                }
+                case 8: {
+                    System.out.println("\n=== All Study Sessions ===");
+                    sessionDirectory.printSessions();
+                    break;
+
                 }
                 case 0: {
                     running = false;
