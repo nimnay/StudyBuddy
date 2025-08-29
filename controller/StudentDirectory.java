@@ -1,3 +1,4 @@
+    
 package controller;
 
 import models.Student;
@@ -37,10 +38,24 @@ public class StudentDirectory {
         s3.addCourse("PHYS 1010");
         s3.addAvailability("Tuesday", "6PM-7PM");
 
+    Student s4 = new Student("Emily", "Biology");
+    s4.addCourse("BIOL 1030");
+    s4.addCourse("CHEM 1010");
+    s4.addAvailability("Wednesday", "10AM-12PM");
+    s4.addAvailability("Friday", "2PM-4PM");
+
+    Student s5 = new Student("Frank", "Engineering");
+    s5.addCourse("ENGR 1410");
+    s5.addCourse("MATH 1060");
+    s5.addAvailability("Monday", "7PM-8PM");
+    s5.addAvailability("Thursday", "1PM-3PM");
+
         // Add fake students to directory
         students.add(s1);
         students.add(s2);
         students.add(s3);
+    students.add(s4);
+    students.add(s5);
     }
 
     /**
@@ -70,5 +85,37 @@ public class StudentDirectory {
      */
     public List<Student> getAllStudents() {
         return students;
+    }
+
+    /**
+     * Prints all students in the directory with their courses and availabilities.
+     */
+    public void printStudents() {
+        if (students.isEmpty()) {
+            System.out.println("No students in the directory.");
+            return;
+        }
+        for (Student s : students) {
+            System.out.println("Name: " + s.getName());
+            System.out.println("  Major: " + s.getMajor());
+            System.out.print("  Courses: ");
+            if (s.getCourses().isEmpty()) {
+                System.out.print("None");
+            } else {
+                for (String c : s.getCourses()) {
+                    System.out.print(c + " ");
+                }
+            }
+            System.out.println();
+            System.out.print("  Availabilities: ");
+            if (s.getAvailabilities().isEmpty()) {
+                System.out.print("None");
+            } else {
+                for (models.Availability a : s.getAvailabilities()) {
+                    System.out.print(a.toString() + " ");
+                }
+            }
+            System.out.println("\n");
+        }
     }
 }

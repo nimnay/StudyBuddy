@@ -78,6 +78,18 @@ public class Student {
         }
     }
 
+
+    /**
+     * Checks if the student is free at the given day and time slot.
+     * @param dayOfWeek The day to check (e.g., "Monday")
+     * @param timeSlot The time slot to check (e.g., "2PM-4PM")
+     * @return true if the student is available at that time, false otherwise
+     */
+    public boolean isFreeAt(String dayOfWeek, String timeSlot) {
+        Availability check = new Availability(dayOfWeek, timeSlot);
+        return availabilities.contains(check);
+    }
+
     // Helper to show courses
     public void printCourses() {
         if (courses.isEmpty()) {
