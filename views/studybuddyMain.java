@@ -2,10 +2,10 @@ package views;
 
 import models.Student;
 
-public class StudyBuddyMain {
+public class studybuddyMain {
     public static void main(String[] args) {
         // Create a student
-        /**Student s1 = new Student("Alice", "Computer Science");
+        Student s1 = new Student("Alice", "Computer Science");
 
         // Test courses
         System.out.println("=== Testing Courses ===");
@@ -26,6 +26,6 @@ public class StudyBuddyMain {
         s1.removeAvailability("MWF", "8:00-8:50");
         s1.removeAvailability("MWF", "10:10-11:00"); // not found test
         s1.printAvailabilities();
-         */
+
     }
 }
