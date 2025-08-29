@@ -2,7 +2,7 @@ package views;
 
 import models.Student;
 
-public class studybuddyMain {
+public class StudyBuddyMain {
     //Each feature in the sprint needs a corresponding change in the FE
     public static void main(String[] args) {
         // Create a student
