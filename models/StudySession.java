@@ -1,37 +1,78 @@
 package models;
-// StudySession.java
+
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * Represents a single study session.
+ * The StudySession class represents a study session that a student can create
+ * for a specific course at a scheduled time.
  *
- * Stores information about the session such as:
- * - The host (student who created it)
- * - The course the session is for
- * - The scheduled time
- * - A list of invited students
+ * A study session always has:
+ *  - A creator (the student who organized it).
+ *  - A course name/ID.
+ *  - A scheduled time.
+ *  - A list of participants (including the creator).
  *
- * Provides methods to add invites and display session details.
- * This class acts as the "data model" for one study group.
+ * The class provides methods to:
+ *  - Add classmates to the session.
+ *  - Remove participants (except the creator).
+ *  - Display session details (course, time, creator, participants).
+ *
+ * Example usage:
+ *   StudySession session = new StudySession(alice, "CPSC 2150", "7:00 PM");
+ *   session.addParticipant(bob);
+ *   session.displaySessionInfo();
  */
 
 public class StudySession {
-    private String host;
-    private String course;
-    private String time;
-    private List<String> invited;
+    private Student creator;                // Who created the session
+    private String course;                  // Course name/ID
+    private String time;                    // Time of session
+    private List<Student> participants;     // Invited classmates
 
-    public StudySession(String host, String course, String time) {
-        this.host = host;
+    // Constructor
+    public StudySession(Student creator, String course, String time) {
+        this.creator = creator;
         this.course = course;
         this.time = time;
-        this.invited = new ArrayList<>();
+        this.participants = new ArrayList<>();
+        this.participants.add(creator); // Creator is always part of the session
     }
 
-    public String getHost() {
-        return host;
+    // Add a classmate
+    public void addParticipant(Student student) {
+        if (!participants.contains(student)) {
+            participants.add(student);
+            System.out.println(student.getName() + " has been added to the study session.");
+        } else {
+            System.out.println(student.getName() + " is already in the study session.");
+        }
+    }
+
+    // Remove a classmate
+    public void removeParticipant(Student student) {
+        if (participants.contains(student) && !student.equals(creator)) {
+            participants.remove(student);
+            System.out.println(student.getName() + " has been removed from the study session.");
+        } else {
+            System.out.println("Cannot remove " + student.getName() + ".");
+        }
+    }
+
+    // Display session details
+    public void displaySessionInfo() {
+        System.out.println("Study Session for: " + course);
+        System.out.println("Time: " + time);
+        System.out.println("Creator: " + creator.getName());
+        System.out.println("Participants:");
+        for (Student s : participants) {
+            System.out.println(" - " + s.getName());
+        }
+    }
+
+    // Getters (if needed)
+    public Student getCreator() {
+        return creator;
     }
 
     public String getCourse() {
@@ -42,19 +83,7 @@ public class StudySession {
         return time;
     }
 
-    public List<String> getInvited() {
-        return invited;
-    }
-
-    public void inviteStudent(String studentName) {
-        invited.add(studentName);
-    }
-
-    @Override
-    public String toString() {
-        return "Study Session [host=" + host +
-                ", course=" + course +
-                ", time=" + time +
-                ", invited=" + invited + "]";
+    public List<Student> getParticipants() {
+        return participants;
     }
 }
