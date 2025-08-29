@@ -1,22 +1,24 @@
 package views;
 
 import models.Student;
+import java.util.Scanner;
 
+import java.util.Scanner;
+import models.Student;
 import java.util.Scanner;
 
 public class StudyBuddyMain {
-    //Each feature in the sprint needs a corresponding change in the FE
     public static void main(String[] args) {
-
         String name, major;
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Welcome to study buddy, lets create your profile to get started\n");
-        System.out.println("Enter your name ");
-        name = scanner.next();
-        scanner.nextLine(); //removing trailing newline
+        System.out.println("Welcome to StudyBuddy! Let's create your profile to get started.\n");
 
-        System.out.println("Enter your major");
+        System.out.print("Enter your name: ");
+        name = scanner.next();
+        scanner.nextLine(); // consume trailing newline
+
+        System.out.print("Enter your major: ");
         major = scanner.nextLine();
 
         Student ourStudent = new Student(name, major);
@@ -34,19 +36,19 @@ public class StudyBuddyMain {
             }
         }
 
+        System.out.println("\n✅ Profile created for " + ourStudent.getName() + " (" + ourStudent.getMajor() + ")");
 
-        System.out.println("\nProfile created for " + ourStudent.getName() + " (" + ourStudent.getMajor() + ")");
-
-        //menu to edit profile
+        // menu loop
         boolean running = true;
         while (running) {
-            System.out.println("\n--- Menu ---");
+            System.out.println("\n--- Main Menu ---");
             System.out.println("1. Add course");
             System.out.println("2. Remove course");
             System.out.println("3. Add availability");
             System.out.println("4. Remove availability");
-            System.out.println("5. Print courses");
-            System.out.println("6. Print availabilities");
+            System.out.println("5. View Profile");
+            System.out.println("6. Create Study Session");
+            System.out.println("7. Browse Study Sessions");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
@@ -55,7 +57,7 @@ public class StudyBuddyMain {
                 choice = scanner.nextInt();
                 scanner.nextLine(); // consume newline
             } else {
-                System.out.println("Please enter a valid number.");
+                System.out.println("❌ Please enter a valid number.");
                 scanner.nextLine();
                 continue;
             }
@@ -89,51 +91,34 @@ public class StudyBuddyMain {
                     ourStudent.removeAvailability(day, time);
                     break;
                 }
-                case 5:{
+                case 5: {
+                    System.out.println("\n=== Profile ===");
+                    System.out.println("Name: " + ourStudent.getName());
+                    System.out.println("Major: " + ourStudent.getMajor());
                     ourStudent.printCourses();
+                    ourStudent.printAvailabilities();
                     break;
                 }
                 case 6: {
-                    ourStudent.printAvailabilities();
+                    System.out.println("\n📅 Create Study Session feature coming soon...");
+                    break;
+                }
+                case 7: {
+                    System.out.println("\n🔍 Browse Study Sessions feature coming soon...");
                     break;
                 }
                 case 0: {
                     running = false;
-                    System.out.println("Goodbye!");
+                    System.out.println("👋 Goodbye!");
                     break;
                 }
-                default: System.out.println("Invalid choice.");
+                default:
+                    System.out.println("❌ Invalid choice.");
             }
         }
 
-
-/*
-
-        // Create a student
-        Student s1 = new Student("Alice", "Computer Science");
-
-        // Test courses
-        System.out.println("=== Testing Courses ===");
-        s1.addCourse("CPSC 1010");
-        s1.addCourse("CPSC 2150");
-        s1.addCourse("CPSC 2150"); // duplicate test
-        s1.printCourses();
-        s1.removeCourse("CPSC 1010");
-        s1.removeCourse("MATH 1080"); // not enrolled test
-        s1.printCourses();
-
-        // Test availabilities
-        System.out.println("\n=== Testing Availabilities ===");
-        s1.addAvailability("MWF", "8:00-8:50");
-        s1.addAvailability("MWF", "9:05-9:55");
-        s1.addAvailability("MWF", "9:05-9:55"); // duplicate test
-        s1.printAvailabilities();
-        s1.removeAvailability("MWF", "8:00-8:50");
-        s1.removeAvailability("MWF", "10:10-11:00"); // not found test
-        s1.printAvailabilities();
-
-    }
-
- */
+        scanner.close();
     }
 }
+
+
