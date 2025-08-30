@@ -1,6 +1,8 @@
 package views;
 
 import models.Student;
+
+import java.util.List;
 import java.util.Scanner;
 
 import java.util.Scanner;
@@ -182,7 +184,7 @@ public class StudyBuddyMain {
                     break;
                 }
 
-                case 8: {
+                case 9: {
                     System.out.println("\n=== All Study Sessions ===");
                     sessionDirectory.printSessions();
                     break;
