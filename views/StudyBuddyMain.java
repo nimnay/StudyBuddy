@@ -95,15 +95,13 @@ public class StudyBuddyMain {
             System.out.println("\n--- Main Menu ---");
             System.out.println("1. Add course");
             System.out.println("2. Remove course");
-            System.out.println("3. Add availability");
-            System.out.println("4. Remove availability");
+            System.out.println("3. Update availability");
             System.out.println("5. View Profile");
             System.out.println("6. Browse Students");
             System.out.println("7. Create Study Session");
             System.out.println("8. Join a Study Session"); // CHANGE TO JOIN A STUDY SESSION
             System.out.println("9. Browse study sessions");
             System.out.println("10. View Suggested Sessions");
-           // System.out.println("11. View My Sessions");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
@@ -135,14 +133,46 @@ public class StudyBuddyMain {
                     break;
                 }
                 case 3: {
-                    System.out.print("Enter day of week: ");
-                    String day = scanner.nextLine();
-                    System.out.print("Enter time slot: ");
-                    String time = scanner.nextLine();
-                    ourStudent.addAvailability(day, time);
-                    System.out.println("Updated Availabilities:");
-                    ourStudent.printAvailabilities();
-                    break;
+                    boolean browsing = true;
+                    while (browsing) {
+                        System.out.println("----Update availability----");
+                        System.out.println("1. Add availability");
+                        System.out.println("2. Remove availability");
+                        System.out.println("3. Back to Main Menu");
+                        System.out.print("Choose an option: ");
+                        int browseChoice = scanner.nextInt();
+                        scanner.nextLine(); // consume newline
+
+                        switch (browseChoice) {
+                            case 1: {
+                                System.out.print("Enter day of week to add: ");
+                                String day = scanner.nextLine();
+                                System.out.print("Enter time slot: ");
+                                String time = scanner.nextLine();
+                                ourStudent.addAvailability(day, time);
+                                System.out.println("Updated Availabilities:");
+                                ourStudent.printAvailabilities();
+                                break;
+                            }
+                            case 2: {
+                                System.out.print("Enter day of week to remove: ");
+                                String day = scanner.nextLine();
+                                System.out.print("Enter time slot to remove: ");
+                                String time = scanner.nextLine();
+                                ourStudent.removeAvailability(day, time);
+                                System.out.println("Updated Availabilities:");
+                                ourStudent.printAvailabilities();
+                                break;
+                            }
+                            case 3: {
+                                browsing = false;
+                                break;
+                            }
+                            default: {
+                                System.out.println("Invalid choice. Try again.");
+                            }
+                        }
+                    }
                 }
                 case 4: {
                     System.out.print("Enter day of week to remove: ");
