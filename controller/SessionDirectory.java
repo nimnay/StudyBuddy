@@ -50,7 +50,11 @@ public class SessionDirectory {
 		return sessions;
 	}
 
-    /**
+	public void addSession(StudySession session) {
+		this.sessions.add(session);
+	}
+
+	/**
 	 * Prints all study sessions and their participants.
 	 */
 	public void printSessions() {

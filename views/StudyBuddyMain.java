@@ -121,28 +121,42 @@ public class StudyBuddyMain {
                     System.out.print("Enter time slot for the session: ");
                     String sessionTime = scanner.nextLine();
                     String sessionDateTime = sessionDay + " " + sessionTime;
+
                     models.StudySession session = new models.StudySession(ourStudent, sessionCourse, sessionDateTime);
 
-                    System.out.print("Enter name of participant to invite: ");
-                    String participantName = scanner.nextLine();
-                    Student participant = studentDirectory.findStudentByName(participantName);
+                    while (true) {
+                        System.out.print("Enter name of participant to invite (or type 'done' to finish): ");
+                        String participantName = scanner.nextLine();
 
-                    if (participant == null) {
-                        System.out.println("No student found with that name.");
-                        break;
+                        if (participantName.equalsIgnoreCase("done")) {
+                            break;
+                        }
+
+                        Student participant = studentDirectory.findStudentByName(participantName);
+
+                        if (participant == null) {
+                            System.out.println("No student found with that name.");
+                            continue; // go back and ask again
+                        }
+
+                        // Student found in directory, now confirm invite
+                        System.out.println("Found: " + participant.getName() + ", Major: " + participant.getMajor());
+                        System.out.print("Invite this student? (y/n): ");
+                        String confirm = scanner.nextLine();
+
+                        if (confirm.equalsIgnoreCase("y")) {
+                            session.addParticipant(participant);
+                        } else {
+                            System.out.println("Skipped inviting " + participant.getName());
+                        }
                     }
-
-                    //Student found in directory, now confirm invite
-                    System.out.println("Found: " + participant.getName() + ", Major: " + participant.getMajor());
-                    System.out.print("Invite this student? (y/n): ");
-                    String confirm = scanner.nextLine();
-
-                    if (confirm.equalsIgnoreCase("y")) {
-                        // check availability and confirm participant for session
-                       session.addParticipant(participant);
-                    }
+                    //Save study session to directory
+                    sessionDirectory.addSession(session);
+                    //Print confirmation information
+                    session.displaySessionInfo();
                     break;
                 }
+
                 case 8: {
                     System.out.println("\n=== All Study Sessions ===");
                     sessionDirectory.printSessions();
