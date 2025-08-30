@@ -15,6 +15,37 @@ public class StudyBuddyMain {
         String name, major;
         Scanner scanner = new Scanner(System.in);
 
+    // Allowed majors (Clemson codes)
+    java.util.Map<String, String> allowedMajors = new java.util.LinkedHashMap<>();
+    allowedMajors.put("cpsc", "Computer Science");
+    allowedMajors.put("bioch", "Biochemistry");
+    allowedMajors.put("cheme", "Chemical Engineering");
+    allowedMajors.put("ce", "Civil Engineering");
+    allowedMajors.put("me", "Mechanical Engineering");
+    allowedMajors.put("ee", "Electrical Engineering");
+    allowedMajors.put("math", "Mathematics");
+    allowedMajors.put("phys", "Physics");
+    allowedMajors.put("bio", "Biology");
+    allowedMajors.put("chem", "Chemistry");
+    allowedMajors.put("stat", "Statistics");
+    allowedMajors.put("econ", "Economics");
+    allowedMajors.put("acct", "Accounting");
+    allowedMajors.put("fin", "Finance");
+    allowedMajors.put("mktg", "Marketing");
+    allowedMajors.put("mgmt", "Management");
+    allowedMajors.put("nurs", "Nursing");
+    allowedMajors.put("eng", "English");
+    allowedMajors.put("hist", "History");
+    allowedMajors.put("psych", "Psychology");
+    allowedMajors.put("soc", "Sociology");
+    allowedMajors.put("anth", "Anthropology");
+    allowedMajors.put("philos", "Philosophy");
+    allowedMajors.put("art", "Art");
+    allowedMajors.put("music", "Music");
+    allowedMajors.put("ed", "Education");
+    allowedMajors.put("poli", "Political Science");
+    allowedMajors.put("comm", "Communication");
+
         // Setup directories and load data
         controller.StudentDirectory studentDirectory = new controller.StudentDirectory();
         studentDirectory.loadFakeStudents();
@@ -23,12 +54,24 @@ public class StudyBuddyMain {
 
         System.out.println("Welcome to StudyBuddy! Let's create your profile to get started.\n");
 
-        System.out.print("Enter your name: ");
+        System.out.print("Enter your full name (first and last): ");
         name = scanner.next();
         scanner.nextLine(); // consume trailing newline
 
-        System.out.print("Enter your major: ");
-        major = scanner.nextLine();
+        // Validate major input
+        while (true) {
+            System.out.println("Enter your major. Choose from the following codes:");
+            for (java.util.Map.Entry<String, String> entry : allowedMajors.entrySet()) {
+                System.out.printf("  %s = %s\n", entry.getKey(), entry.getValue());
+            }
+            System.out.print("Major code: ");
+            major = scanner.nextLine().trim();
+            if (allowedMajors.containsKey(major.toLowerCase())) {
+                break;
+            } else {
+                System.out.println("❌ Invalid major code. Please enter one of the listed codes.");
+            }
+        }
 
         Student ourStudent = new Student(name, major);
 
@@ -57,8 +100,9 @@ public class StudyBuddyMain {
             System.out.println("4. Remove availability");
             System.out.println("5. View Profile");
             System.out.println("6. Browse Students");
-            System.out.println("7. Create Study Session");
-            System.out.println("8. Browse Study Sessions");
+            System.out.println("7. Search Students by Classes");
+            System.out.println("8. Create Study Session");
+            System.out.println("9. Browse Study Sessions");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
