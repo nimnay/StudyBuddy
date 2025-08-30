@@ -79,6 +79,18 @@ public class StudentDirectory {
         return null;
     }
 
+    //lists students taking specified course
+    public List<Student> findByCourse(String course) {
+        List<Student> result = new ArrayList<>();
+        for (Student s : students) {
+            if (s.getCourses().contains(course)) {
+                result.add(s);
+            }
+        }
+        return result;
+    }
+
+
     /**
      * Get all students in the directory.
      * @return List of all students
