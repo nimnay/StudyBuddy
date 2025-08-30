@@ -39,18 +39,18 @@ public class StudySession {
     }
 
     // Add a classmate
-    public void addParticipant(Student student) {
+    public String addParticipant(Student student) {
         if (!participants.contains(student)) {
             // Assume time is in format "DayOfWeek TimeSlot", e.g., "Monday 2PM-4PM"
             String[] parts = time.split(" ", 2);
             if (parts.length == 2 && student.isFreeAt(parts[0], parts[1])) {
                 participants.add(student);
-                System.out.println(student.getName() + " has accepted the invitation and was added to the study session.");
+                return student.getName() + " has accepted the invitation and was added to the study session.";
             } else {
-                System.out.println(student.getName() + " has declined the invitation (not available at this time).");
+                return student.getName() + " has declined the invitation (not available at this time).";
             }
         } else {
-            System.out.println(student.getName() + " is already in the study session.");
+            return student.getName() + " is already in the study session.";
         }
     }
 

@@ -75,12 +75,16 @@ public class StudyBuddyMain {
                     System.out.print("Enter course to add: ");
                     String course = scanner.nextLine();
                     ourStudent.addCourse(course);
+                    System.out.println("Updated Courses: ");
+                    ourStudent.printCourses();
                     break;
                 }
                 case 2: {
                     System.out.print("Enter course to remove: ");
                     String course = scanner.nextLine();
                     ourStudent.removeCourse(course);
+                    System.out.println("Updated Courses: ");
+                    ourStudent.printCourses();
                     break;
                 }
                 case 3: {
@@ -89,6 +93,8 @@ public class StudyBuddyMain {
                     System.out.print("Enter time slot: ");
                     String time = scanner.nextLine();
                     ourStudent.addAvailability(day, time);
+                    System.out.println("Updated Availabilities:");
+                    ourStudent.printAvailabilities();
                     break;
                 }
                 case 4: {
@@ -97,6 +103,8 @@ public class StudyBuddyMain {
                     System.out.print("Enter time slot to remove: ");
                     String time = scanner.nextLine();
                     ourStudent.removeAvailability(day, time);
+                    System.out.println("Updated Availabilities:");
+                    ourStudent.printAvailabilities();
                     break;
                 }
                 case 5: {
@@ -145,7 +153,8 @@ public class StudyBuddyMain {
                         String confirm = scanner.nextLine();
 
                         if (confirm.equalsIgnoreCase("y")) {
-                            session.addParticipant(participant);
+                            String result = session.addParticipant(participant);
+                            System.out.println(result);
                         } else {
                             System.out.println("Skipped inviting " + participant.getName());
                         }
@@ -153,6 +162,7 @@ public class StudyBuddyMain {
                     //Save study session to directory
                     sessionDirectory.addSession(session);
                     //Print confirmation information
+                    System.out.println("STUDY SESSION CONFIRMATION DETAILS:");
                     session.displaySessionInfo();
                     break;
                 }

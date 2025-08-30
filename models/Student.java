@@ -43,7 +43,6 @@ public class Student {
     public void addCourse(String course) {
         if (!courses.contains(course)) {
             courses.add(course);
-            System.out.println("Added course: " + course);
         } else {
             System.out.println("That course is already enrolled.");
         }
@@ -51,7 +50,6 @@ public class Student {
 
     public void removeCourse(String course) {
         if (courses.remove(course)) {
-            System.out.println("Removed course: " + course);
         } else {
             System.out.println("Course not found.");
         }
@@ -62,9 +60,6 @@ public class Student {
         Availability newSlot = new Availability(dayOfWeek, timeSlot);
         if (!availabilities.contains(newSlot)) {
             availabilities.add(newSlot);
-            System.out.println("Added availability: " + newSlot);
-        } else {
-            System.out.println("That availability already exists.");
         }
     }
 
@@ -72,7 +67,6 @@ public class Student {
     public void removeAvailability(String dayOfWeek, String timeSlot) {
         Availability slotToRemove = new Availability(dayOfWeek, timeSlot);
         if (availabilities.remove(slotToRemove)) {
-            System.out.println("Removed availability: " + slotToRemove);
         } else {
             System.out.println("Availability not found.");
         }
