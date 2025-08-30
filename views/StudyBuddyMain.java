@@ -103,7 +103,7 @@ public class StudyBuddyMain {
             System.out.println("8. Join a Study Session"); // CHANGE TO JOIN A STUDY SESSION
             System.out.println("9. Browse study sessions");
             System.out.println("10. View Suggested Sessions");
-            System.out.println("11. View My Sessions");
+           // System.out.println("11. View My Sessions");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
@@ -160,6 +160,21 @@ public class StudyBuddyMain {
                     System.out.println("Major: " + ourStudent.getMajor());
                     ourStudent.printCourses();
                     ourStudent.printAvailabilities();
+                    System.out.println("\n=== Sessions You're In ===");
+                    List<StudySession> allSessions = sessionDirectory.getSessions();
+                    boolean found = false;
+                    for (StudySession s : allSessions) {
+                        for (Student p : s.getParticipants()) {
+                            if (p.getName().equalsIgnoreCase(ourStudent.getName())) {
+                                System.out.println("- " + s.getCourse() + " | Host: " + s.getCreator().getName() + " | " + s.getTime());
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!found) {
+                        System.out.println("You are not currently in any sessions.");
+                    }
                     break;
                 }
                 case 6: {
@@ -406,24 +421,6 @@ public class StudyBuddyMain {
                         System.out.println(selectedSession.addParticipant(ourStudent));
                     } else {
                         System.out.println("Cancelled joining session.");
-                    }
-                    break;
-                }
-                case 11: {
-                    System.out.println("\n=== Sessions You're In ===");
-                    List<StudySession> allSessions = sessionDirectory.getSessions();
-                    boolean found = false;
-                    for (StudySession s : allSessions) {
-                        for (Student p : s.getParticipants()) {
-                            if (p.getName().equalsIgnoreCase(ourStudent.getName())) {
-                                System.out.println("- " + s.getCourse() + " | Host: " + s.getCreator().getName() + " | " + s.getTime());
-                                found = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (!found) {
-                        System.out.println("You are not currently in any sessions.");
                     }
                     break;
                 }
