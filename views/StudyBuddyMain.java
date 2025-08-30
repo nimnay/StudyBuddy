@@ -121,6 +121,21 @@ public class StudyBuddyMain {
                     break;
                 }
                 case 7: {
+                    System.out.println("Which class do you want to search? ");
+                    String course = scanner.nextLine();
+                    List<Student> classmates = studentDirectory.findByCourse(course);
+
+                    if (classmates.isEmpty()) {
+                        System.out.println("No students found in " + course);
+                    } else {
+                        System.out.println("Classmates in " + course + ":");
+                        for (Student s : classmates) {
+                            System.out.println(" - " + s.getName() + " (" + s.getMajor() + ")");
+                        }
+                    }
+                    break;
+                }
+                case 8: {
                     System.out.println("\n📅 Create Study Session");
                     System.out.print("Enter course for the session: ");
                     String sessionCourse = scanner.nextLine();
