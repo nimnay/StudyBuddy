@@ -100,7 +100,8 @@ public class StudyBuddyMain {
             System.out.println("6. Browse Students");
             System.out.println("7. Search Students by Classes");
             System.out.println("8. Create Study Session");
-            System.out.println("9. Join a Study Sessions"); // CHANGE TO JOIN A STUDY SESSION
+            System.out.println("9. Join a Study Session"); // CHANGE TO JOIN A STUDY SESSION
+            System.out.println("10. Browse study sessions");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
@@ -283,6 +284,11 @@ public class StudyBuddyMain {
                     } else {
                         System.out.println("Cancelled joining session.");
                     }
+                    break;
+                }
+                case 10: {
+                    System.out.println("All Study Sessions:");
+                    sessionDirectory.printSessions();
                     break;
                 }
                 case 0: {
