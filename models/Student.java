@@ -79,11 +79,41 @@ public class Student {
      * @param timeSlot The time slot to check (e.g., "2PM-4PM")
      * @return true if the student is available at that time, false otherwise
      */
-    public boolean isFreeAt(String dayOfWeek, String timeSlot) {
-        Availability check = new Availability(dayOfWeek, timeSlot);
-        return availabilities.contains(check);
+    public boolean isFreeAt(String day, String sessionTime) {
+        for (Availability availability : availabilities) {
+            if (availability.getDayOfWeek().equalsIgnoreCase(day)) {
+                // Compare time ranges
+                if (timeOverlaps(availability.getTimeSlot(), sessionTime)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
+    private boolean timeOverlaps(String availabilityTime, String sessionTime) {
+        // availabilityTime and sessionTime look like "6PM-8PM"
+        String[] availRange = availabilityTime.split("-");
+        String[] sessionRange = sessionTime.split("-");
+        if (availRange.length == 2 && sessionRange.length == 2) {
+            int availStart = convertTo24Hour(availRange[0].trim());
+            int availEnd   = convertTo24Hour(availRange[1].trim());
+            int sessionStart = convertTo24Hour(sessionRange[0].trim());
+            int sessionEnd   = convertTo24Hour(sessionRange[1].trim());
+
+            // check if session fits in availability
+            return sessionStart >= availStart && sessionEnd <= availEnd;
+        }
+        return false;
+    }
+
+    private int convertTo24Hour(String time) {
+        // crude parser: "6PM" -> 18, "10AM" -> 10
+        int hour = Integer.parseInt(time.replaceAll("[^0-9]", ""));
+        if (time.contains("PM") && hour != 12) hour += 12;
+        if (time.contains("AM") && hour == 12) hour = 0;
+        return hour;
+    }
     // Helper to show courses
     public void printCourses() {
         if (courses.isEmpty()) {
