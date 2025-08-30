@@ -63,7 +63,7 @@ public class StudyBuddyMain {
                 System.out.printf("  %s = %s\n", entry.getKey(), entry.getValue());
             }
             System.out.print("Major code: ");
-            major = scanner.nextLine().trim();
+            major = scanner.nextLine().trim().toLowerCase();
             if (allowedMajors.containsKey(major.toLowerCase())) {
                 break;
             } else {
@@ -93,15 +93,14 @@ public class StudyBuddyMain {
         boolean running = true;
         while (running) {
             System.out.println("\n--- Main Menu ---");
-            System.out.println("1. Add course");
-            System.out.println("2. Remove course");
-            System.out.println("3. Update availability");
-            System.out.println("5. View Profile");
-            System.out.println("6. Browse Students");
-            System.out.println("7. Create Study Session");
-            System.out.println("8. Join a Study Session"); // CHANGE TO JOIN A STUDY SESSION
-            System.out.println("9. Browse study sessions");
-            System.out.println("10. View Suggested Sessions");
+            System.out.println("1. Manage Courses");
+            System.out.println("2. Update availability");
+            System.out.println("3. View Profile");
+            System.out.println("4. Browse Students");
+            System.out.println("5. Create Study Session");
+            System.out.println("6. Join a Study Session"); // CHANGE TO JOIN A STUDY SESSION
+            System.out.println("7. Browse study sessions");
+            System.out.println("8. View Suggested Sessions");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
@@ -117,22 +116,45 @@ public class StudyBuddyMain {
 
             switch (choice) {
                 case 1: {
-                    System.out.print("Enter course to add: ");
-                    String course = scanner.nextLine();
-                    ourStudent.addCourse(course);
-                    System.out.println("Updated Courses: ");
-                    ourStudent.printCourses();
+                    boolean managingCourses = true;
+                    while (managingCourses) {
+                        System.out.println("----Manage Courses---");
+                        System.out.println("1. Add a course");
+                        System.out.println("2. Remove a course");
+                        System.out.print("Choose an option: ");
+                        int courseChoice = scanner.nextInt();
+                        scanner.nextLine();
+
+                        switch (courseChoice) {
+                            case 1: {
+                                System.out.print("Enter course to add: ");
+                                String course = scanner.nextLine();
+                                ourStudent.addCourse(course);
+                                System.out.println("Updated Courses: ");
+                                ourStudent.printCourses();
+                                break;
+                            }
+                            case 2: {
+                                System.out.print("Enter course to remove: ");
+                                String course = scanner.nextLine();
+                                ourStudent.removeCourse(course);
+                                System.out.println("Updated Courses: ");
+                                ourStudent.printCourses();
+                                break;
+                            }
+                            case 3: {
+                                managingCourses = false;
+                                break;
+                            }
+                            default: {
+                                System.out.println("Invalid choice. Try again.");
+                            }
+                        }
+                        managingCourses = false;
+                    }
                     break;
                 }
                 case 2: {
-                    System.out.print("Enter course to remove: ");
-                    String course = scanner.nextLine();
-                    ourStudent.removeCourse(course);
-                    System.out.println("Updated Courses: ");
-                    ourStudent.printCourses();
-                    break;
-                }
-                case 3: {
                     boolean browsing = true;
                     while (browsing) {
                         System.out.println("----Update availability----");
@@ -172,19 +194,10 @@ public class StudyBuddyMain {
                                 System.out.println("Invalid choice. Try again.");
                             }
                         }
+                        browsing = false;
                     }
                 }
-                case 4: {
-                    System.out.print("Enter day of week to remove: ");
-                    String day = scanner.nextLine();
-                    System.out.print("Enter time slot to remove: ");
-                    String time = scanner.nextLine();
-                    ourStudent.removeAvailability(day, time);
-                    System.out.println("Updated Availabilities:");
-                    ourStudent.printAvailabilities();
-                    break;
-                }
-                case 5: {
+                case 3: {
                     System.out.println("\n=== Profile ===");
                     System.out.println("Name: " + ourStudent.getName());
                     System.out.println("Major: " + ourStudent.getMajor());
@@ -207,7 +220,7 @@ public class StudyBuddyMain {
                     }
                     break;
                 }
-                case 6: {
+                case 4: {
                     boolean browsing = true;
                     while (browsing) {
                         System.out.println("\n--- Browse Students ---");
@@ -269,24 +282,7 @@ public class StudyBuddyMain {
                     //studentDirectory.printStudents();
                     break;
                 }
-              /*  case 7: {
-                    System.out.println("Which class do you want to search? ");
-                    String course = scanner.nextLine();
-                    List<Student> classmates = studentDirectory.findByCourse(course);
-
-                    if (classmates.isEmpty()) {
-                        System.out.println("No students found in " + course);
-                    } else {
-                        System.out.println("Classmates in " + course + ":");
-                        for (Student s : classmates) {
-                            System.out.println(" - " + s.getName() + " (" + s.getMajor() + ")");
-                        }
-                    }
-                    break;
-                }
-
-               */
-                case 7: {
+                case 5: {
                     System.out.println("\n📅 Create Study Session");
                     System.out.print("Enter course for the session: ");
                     String sessionCourse = scanner.nextLine();
@@ -332,7 +328,7 @@ public class StudyBuddyMain {
                     session.displaySessionInfo();
                     break;
                 }
-                case 8: {
+                case 6: {
                     System.out.println("\n📚 Join a Study Session");
 
                     // Show all sessions first
@@ -392,12 +388,12 @@ public class StudyBuddyMain {
                     }
                     break;
                 }
-                case 9: {
+                case 7: {
                     System.out.println("All Study Sessions:");
                     sessionDirectory.printSessions();
                     break;
                 }
-                case 10: {
+                case 8: {
                     System.out.println("Here are the Suggested Sessions based on your classes:");
                     List<StudySession> allSessions = sessionDirectory.getSessions();
                     List<String> myCourses = ourStudent.getCourses();
