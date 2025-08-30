@@ -38,19 +38,23 @@ public class StudySession {
         this.participants.add(creator); // Creator is always part of the session
     }
 
-    // Add a classmate
+    // Add a classmate, MAX CAPACITY = 5
     public String addParticipant(Student student) {
+        if (participants.size() >= 5) {
+            return "⚠️ This study session is already full (max 5 participants).";
+        }
+
         if (!participants.contains(student)) {
             // Assume time is in format "DayOfWeek TimeSlot", e.g., "Monday 2PM-4PM"
             String[] parts = time.split(" ", 2);
             if (parts.length == 2 && student.isFreeAt(parts[0], parts[1])) {
                 participants.add(student);
-                return student.getName() + " has accepted the invitation and was added to the study session.";
+                return "✅ " + student.getName() + " has accepted the invitation and was added to the study session.";
             } else {
-                return student.getName() + " has declined the invitation (not available at this time).";
+                return "❌ " + student.getName() + " has declined the invitation (not available at this time).";
             }
         } else {
-            return student.getName() + " is already in the study session.";
+            return "⚠️ " + student.getName() + " is already in the study session.";
         }
     }
 
@@ -91,4 +95,5 @@ public class StudySession {
     public List<Student> getParticipants() {
         return participants;
     }
+
 }

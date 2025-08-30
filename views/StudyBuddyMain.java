@@ -5,9 +5,7 @@ import models.Student;
 import java.util.List;
 import java.util.Scanner;
 
-import java.util.Scanner;
-import models.Student;
-import java.util.Scanner;
+import models.StudySession;
 
 public class StudyBuddyMain {
     public static void main(String[] args) {
@@ -102,7 +100,7 @@ public class StudyBuddyMain {
             System.out.println("6. Browse Students");
             System.out.println("7. Search Students by Classes");
             System.out.println("8. Create Study Session");
-            System.out.println("9. Browse Study Sessions");
+            System.out.println("9. Join a Study Sessions"); // CHANGE TO JOIN A STUDY SESSION
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
@@ -227,12 +225,65 @@ public class StudyBuddyMain {
                     session.displaySessionInfo();
                     break;
                 }
-
                 case 9: {
-                    System.out.println("\n=== All Study Sessions ===");
-                    sessionDirectory.printSessions();
-                    break;
+                    System.out.println("\n📚 Join a Study Session");
 
+                    // Show all sessions first
+                    List<StudySession> sessions = sessionDirectory.getSessions();
+
+                    if (sessions.isEmpty()) {
+                        System.out.println("No sessions available to join at the moment.");
+                        break;
+                    }
+
+                    System.out.println("=== All Study Sessions ===");
+                    for (int i = 0; i < sessions.size(); i++) {
+                        StudySession s = sessions.get(i);
+                        System.out.println((i + 1) + ". " + s.getCourse() + " | Host: "
+                                + s.getCreator().getName() + " | " + s.getTime());
+                    }
+
+                    System.out.print("Enter the number of the session to join: ");
+                    int sessionNum;
+                    try {
+                        sessionNum = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid input. Returning to menu.");
+                        break;
+                    }
+
+                    if (sessionNum < 1 || sessionNum > sessions.size()) {
+                        System.out.println("Invalid session number.");
+                        break;
+                    }
+
+                    StudySession selectedSession = sessions.get(sessionNum - 1);
+
+                    // Split day and time from session.getTime()
+                    String[] parts = selectedSession.getTime().split(" ", 2);
+                    String day = parts[0];     // e.g., "Monday"
+                    String time = parts[1];    // e.g., "3PM"
+
+                    // Now check if student is free at this day/time
+                    if (!ourStudent.isFreeAt(day, time)) {
+                        System.out.println("⚠️ You are not available at this time. Please update your availability first.");
+                        break;
+                    }
+
+                    // Show confirmation
+                    System.out.println("You selected: " + selectedSession.getCourse() +
+                            " | Host: " + selectedSession.getCreator().getName() +
+                            " | " + selectedSession.getTime());
+
+                    System.out.print("Confirm join? (y/n): ");
+                    String confirm = scanner.nextLine();
+
+                    if (confirm.equalsIgnoreCase("y")) {
+                        System.out.println(selectedSession.addParticipant(ourStudent));
+                    } else {
+                        System.out.println("Cancelled joining session.");
+                    }
+                    break;
                 }
                 case 0: {
                     running = false;
