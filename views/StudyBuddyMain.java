@@ -13,36 +13,36 @@ public class StudyBuddyMain {
         String name, major;
         Scanner scanner = new Scanner(System.in);
 
-    // Allowed majors (Clemson codes)
-    java.util.Map<String, String> allowedMajors = new java.util.LinkedHashMap<>();
-    allowedMajors.put("cpsc", "Computer Science");
-    allowedMajors.put("bioch", "Biochemistry");
-    allowedMajors.put("cheme", "Chemical Engineering");
-    allowedMajors.put("ce", "Civil Engineering");
-    allowedMajors.put("me", "Mechanical Engineering");
-    allowedMajors.put("ee", "Electrical Engineering");
-    allowedMajors.put("math", "Mathematics");
-    allowedMajors.put("phys", "Physics");
-    allowedMajors.put("bio", "Biology");
-    allowedMajors.put("chem", "Chemistry");
-    allowedMajors.put("stat", "Statistics");
-    allowedMajors.put("econ", "Economics");
-    allowedMajors.put("acct", "Accounting");
-    allowedMajors.put("fin", "Finance");
-    allowedMajors.put("mktg", "Marketing");
-    allowedMajors.put("mgmt", "Management");
-    allowedMajors.put("nurs", "Nursing");
-    allowedMajors.put("eng", "English");
-    allowedMajors.put("hist", "History");
-    allowedMajors.put("psych", "Psychology");
-    allowedMajors.put("soc", "Sociology");
-    allowedMajors.put("anth", "Anthropology");
-    allowedMajors.put("philos", "Philosophy");
-    allowedMajors.put("art", "Art");
-    allowedMajors.put("music", "Music");
-    allowedMajors.put("ed", "Education");
-    allowedMajors.put("poli", "Political Science");
-    allowedMajors.put("comm", "Communication");
+        // Allowed majors (Clemson codes)
+        java.util.Map<String, String> allowedMajors = new java.util.LinkedHashMap<>();
+        allowedMajors.put("cpsc", "Computer Science");
+        allowedMajors.put("bioch", "Biochemistry");
+        allowedMajors.put("cheme", "Chemical Engineering");
+        allowedMajors.put("ce", "Civil Engineering");
+        allowedMajors.put("me", "Mechanical Engineering");
+        allowedMajors.put("ee", "Electrical Engineering");
+        allowedMajors.put("math", "Mathematics");
+        allowedMajors.put("phys", "Physics");
+        allowedMajors.put("bio", "Biology");
+        allowedMajors.put("chem", "Chemistry");
+        allowedMajors.put("stat", "Statistics");
+        allowedMajors.put("econ", "Economics");
+        allowedMajors.put("acct", "Accounting");
+        allowedMajors.put("fin", "Finance");
+        allowedMajors.put("mktg", "Marketing");
+        allowedMajors.put("mgmt", "Management");
+        allowedMajors.put("nurs", "Nursing");
+        allowedMajors.put("eng", "English");
+        allowedMajors.put("hist", "History");
+        allowedMajors.put("psych", "Psychology");
+        allowedMajors.put("soc", "Sociology");
+        allowedMajors.put("anth", "Anthropology");
+        allowedMajors.put("philos", "Philosophy");
+        allowedMajors.put("art", "Art");
+        allowedMajors.put("music", "Music");
+        allowedMajors.put("ed", "Education");
+        allowedMajors.put("poli", "Political Science");
+        allowedMajors.put("comm", "Communication");
 
         // Setup directories and load data
         controller.StudentDirectory studentDirectory = new controller.StudentDirectory();
@@ -53,8 +53,8 @@ public class StudyBuddyMain {
         System.out.println("Welcome to StudyBuddy! Let's create your profile to get started.\n");
 
         System.out.print("Enter your full name (first and last): ");
-        name = scanner.next();
-        scanner.nextLine(); // consume trailing newline
+        name = scanner.nextLine();
+        //scanner.nextLine(); // consume trailing newline
 
         // Validate major input
         while (true) {
@@ -71,7 +71,8 @@ public class StudyBuddyMain {
             }
         }
 
-        Student ourStudent = new Student(name, major);
+        //Student ourStudent = new Student(name, major);
+        Student ourStudent = new Student(name, allowedMajors.get(major));
 
         System.out.println("\nNow let's add all your courses.");
         boolean addingCourses = true;
@@ -98,12 +99,11 @@ public class StudyBuddyMain {
             System.out.println("4. Remove availability");
             System.out.println("5. View Profile");
             System.out.println("6. Browse Students");
-            System.out.println("7. Search Students by Classes");
-            System.out.println("8. Create Study Session");
-            System.out.println("9. Join a Study Session"); // CHANGE TO JOIN A STUDY SESSION
-            System.out.println("10. Browse study sessions");
-            System.out.println("11. View Suggested Sessions");
-            System.out.println("12. View My Sessions");
+            System.out.println("7. Create Study Session");
+            System.out.println("8. Join a Study Session"); // CHANGE TO JOIN A STUDY SESSION
+            System.out.println("9. Browse study sessions");
+            System.out.println("10. View Suggested Sessions");
+            System.out.println("11. View My Sessions");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
@@ -163,11 +163,68 @@ public class StudyBuddyMain {
                     break;
                 }
                 case 6: {
-                    System.out.println("\n=== All Students ===");
-                    studentDirectory.printStudents();
+                    boolean browsing = true;
+                    while (browsing) {
+                        System.out.println("\n--- Browse Students ---");
+                        System.out.println("1. Browse by Course");
+                        System.out.println("2. Browse by Major");
+                        System.out.println("3. See All Students");
+                        System.out.println("4. Back to Main Menu");
+                        System.out.print("Choose an option: ");
+                        int browseChoice = scanner.nextInt();
+                        scanner.nextLine(); // consume newline
+
+                        switch (browseChoice) {
+                            case 1: { // by course
+                                System.out.print("Enter course code (e.g. CS101): ");
+                                String course = scanner.nextLine();
+                                List<Student> byCourse = studentDirectory.findByCourse(course);
+                                if (byCourse.isEmpty()) {
+                                    System.out.println("No students found for " + course);
+                                } else {
+                                    System.out.println("Students in " + course + ":");
+                                    for (Student s : byCourse) {
+                                        System.out.println( s.getName() + " (" + s.getMajor() + ")");
+                                    }
+                                }
+                                break;
+                            }
+                            case 2: { // by major
+                                System.out.print("Enter major (e.g. ComputerScience): ");
+                                String majorInput = scanner.nextLine();
+                                List<Student> byMajor = studentDirectory.getStudentsByMajor(majorInput);
+                                if (byMajor.isEmpty()) {
+                                    System.out.println("No students found in " + majorInput);
+                                } else {
+                                    System.out.println("Students in " + majorInput + ":");
+                                    for (Student s : byMajor) {
+                                        System.out.println(s.getName() + " (" + s.getMajor() + ")");
+                                    }
+                                }
+                                break;
+                            }
+                            case 3: { // all students
+                                System.out.println("All registered students:");
+                                for (Student s : studentDirectory.getAllStudents()) {
+                                    System.out.println(s.getName() + " (" + s.getMajor() + ")");
+                                }
+                                break;
+                            }
+                            case 4: {
+                                browsing = false; // exit submenu
+                                break;
+                            }
+                            default: {
+                                System.out.println("Invalid choice. Try again.");
+                            }
+                        }
+                    }
+
+                   // System.out.println("\n=== All Students ===");
+                    //studentDirectory.printStudents();
                     break;
                 }
-                case 7: {
+              /*  case 7: {
                     System.out.println("Which class do you want to search? ");
                     String course = scanner.nextLine();
                     List<Student> classmates = studentDirectory.findByCourse(course);
@@ -182,7 +239,9 @@ public class StudyBuddyMain {
                     }
                     break;
                 }
-                case 8: {
+
+               */
+                case 7: {
                     System.out.println("\n📅 Create Study Session");
                     System.out.print("Enter course for the session: ");
                     String sessionCourse = scanner.nextLine();
@@ -228,7 +287,7 @@ public class StudyBuddyMain {
                     session.displaySessionInfo();
                     break;
                 }
-                case 9: {
+                case 8: {
                     System.out.println("\n📚 Join a Study Session");
 
                     // Show all sessions first
@@ -288,12 +347,12 @@ public class StudyBuddyMain {
                     }
                     break;
                 }
-                case 10: {
+                case 9: {
                     System.out.println("All Study Sessions:");
                     sessionDirectory.printSessions();
                     break;
                 }
-                case 11: {
+                case 10: {
                     System.out.println("Here are the Suggested Sessions based on your classes:");
                     List<StudySession> allSessions = sessionDirectory.getSessions();
                     List<String> myCourses = ourStudent.getCourses();
@@ -350,7 +409,7 @@ public class StudyBuddyMain {
                     }
                     break;
                 }
-                case 12: {
+                case 11: {
                     System.out.println("\n=== Sessions You're In ===");
                     List<StudySession> allSessions = sessionDirectory.getSessions();
                     boolean found = false;
