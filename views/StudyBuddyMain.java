@@ -125,20 +125,22 @@ public class StudyBuddyMain {
 
                     System.out.print("Enter name of participant to invite: ");
                     String participantName = scanner.nextLine();
-                    System.out.print("Enter major of participant: ");
-                    String participantMajor = scanner.nextLine();
-                    models.Student participant = new models.Student(participantName, participantMajor);
-                    System.out.println("Add availability for participant (at least one should match session time):");
-                    boolean addAvail = true;
-                    while (addAvail) {
-                        System.out.print("Enter day of week (or 'done'): ");
-                        String pDay = scanner.nextLine();
-                        if (pDay.equalsIgnoreCase("done")) break;
-                        System.out.print("Enter time slot: ");
-                        String pTime = scanner.nextLine();
-                        participant.addAvailability(pDay, pTime);
+                    Student participant = studentDirectory.findStudentByName(participantName);
+
+                    if (participant == null) {
+                        System.out.println("No student found with that name.");
+                        break;
                     }
-                    session.addParticipant(participant);
+
+                    //Student found in directory, now confirm invite
+                    System.out.println("Found: " + participant.getName() + ", Major: " + participant.getMajor());
+                    System.out.print("Invite this student? (y/n): ");
+                    String confirm = scanner.nextLine();
+
+                    if (confirm.equalsIgnoreCase("y")) {
+                        // check availability and confirm participant for session
+                       session.addParticipant(participant);
+                    }
                     break;
                 }
                 case 8: {
