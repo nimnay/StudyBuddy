@@ -12,14 +12,29 @@ import java.util.List;
  * retrieve students, making it easy to integrate with StudySession for invitations.
  */
 
+
+/**
+ * StudentDirectory manages all students in the app, including both real users
+ * and preloaded fake classmates. Provides methods to add, find, and retrieve students.
+ */
 public class StudentDirectory {
+    /**
+     * List to store all students in the directory.
+     */
     private List<Student> students;
 
-    // Constructor
+    /**
+     * Constructor initializes the students list.
+     */
     public StudentDirectory() {
         this.students = new ArrayList<>();
     }
 
+    /**
+     * Loads fake student data into the directory.
+     * For simplicity, fake students are hardcoded.
+     * Later, this could be replaced with reading from a JSON or CSV file.
+     */
     /**
      * Loads fake student data into the directory.
      * For simplicity, fake students are hardcoded.
@@ -38,32 +53,35 @@ public class StudentDirectory {
         s3.addCourse("PHYS 1010");
         s3.addAvailability("Tuesday", "6PM-7PM");
 
-    Student s4 = new Student("Emily", "Biology");
-    s4.addCourse("BIOL 1030");
-    s4.addCourse("CHEM 1010");
-    s4.addAvailability("Wednesday", "10AM-12PM");
-    s4.addAvailability("Friday", "2PM-4PM");
+        Student s4 = new Student("Emily", "Biology");
+        s4.addCourse("BIOL 1030");
+        s4.addCourse("CHEM 1010");
+        s4.addAvailability("Wednesday", "10AM-12PM");
+        s4.addAvailability("Friday", "2PM-4PM");
 
-    Student s5 = new Student("Frank", "Engineering");
-    s5.addCourse("ENGR 1410");
-    s5.addCourse("MATH 1060");
-    s5.addAvailability("Monday", "7PM-8PM");
-    s5.addAvailability("Thursday", "1PM-3PM");
+        Student s5 = new Student("Frank", "Engineering");
+        s5.addCourse("ENGR 1410");
+        s5.addCourse("MATH 1060");
+        s5.addAvailability("Monday", "7PM-8PM");
+        s5.addAvailability("Thursday", "1PM-3PM");
 
         // Add fake students to directory
         students.add(s1);
         students.add(s2);
         students.add(s3);
-    students.add(s4);
-    students.add(s5);
+        students.add(s4);
+        students.add(s5);
     }
+
 
     /**
      * Add a new student to the directory (e.g., real user creating a profile)
+     * @param student The Student to add
      */
     public void addStudent(Student student) {
         students.add(student);
     }
+
 
     /**
      * Find a student by name.
@@ -79,7 +97,12 @@ public class StudentDirectory {
         return null;
     }
 
-    //lists students taking specified course
+
+    /**
+     * Lists students taking the specified course.
+     * @param course The course to search for
+     * @return List of students enrolled in the course
+     */
     public List<Student> findByCourse(String course) {
         List<Student> result = new ArrayList<>();
         for (Student s : students) {
@@ -91,6 +114,7 @@ public class StudentDirectory {
     }
 
 
+
     /**
      * Get all students in the directory.
      * @return List of all students
@@ -98,6 +122,7 @@ public class StudentDirectory {
     public List<Student> getAllStudents() {
         return students;
     }
+
 
     /**
      * Prints all students in the directory with their courses and availabilities.
