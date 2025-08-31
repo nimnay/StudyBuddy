@@ -1,4 +1,3 @@
-    
 package controller;
 
 import models.Student;
@@ -154,5 +153,20 @@ public class StudentDirectory {
             }
             System.out.println("\n");
         }
+    }
+
+     /**
+     * Returns a list of students with the specified major (case-insensitive).
+     * @param major The major to search for
+     * @return List of students with the given major
+     */
+    public List<Student> getStudentsByMajor(String major) {
+        List<Student> result = new ArrayList<>();
+        for (Student s : students) {
+            if (s.getMajor().equalsIgnoreCase(major)) {
+                result.add(s);
+            }
+        }
+        return result;
     }
 }

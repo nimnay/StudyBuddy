@@ -34,15 +34,6 @@ public class StudyBuddyMain {
         allowedMajors.put("nurs", "Nursing");
         allowedMajors.put("eng", "English");
         allowedMajors.put("hist", "History");
-        allowedMajors.put("psych", "Psychology");
-        allowedMajors.put("soc", "Sociology");
-        allowedMajors.put("anth", "Anthropology");
-        allowedMajors.put("philos", "Philosophy");
-        allowedMajors.put("art", "Art");
-        allowedMajors.put("music", "Music");
-        allowedMajors.put("ed", "Education");
-        allowedMajors.put("poli", "Political Science");
-        allowedMajors.put("comm", "Communication");
 
         // Setup directories and load data
         controller.StudentDirectory studentDirectory = new controller.StudentDirectory();
