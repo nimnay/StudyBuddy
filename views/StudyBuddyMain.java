@@ -103,7 +103,6 @@ public class StudyBuddyMain {
             System.out.println("9. Join a Study Session"); // CHANGE TO JOIN A STUDY SESSION
             System.out.println("10. Browse study sessions");
             System.out.println("11. View Suggested Sessions");
-            System.out.println("12. View My Sessions");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
