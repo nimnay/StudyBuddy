@@ -2,98 +2,136 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- * The StudySession class represents a study session that a student can create
- * for a specific course at a scheduled time.
- *
- * A study session always has:
- *  - A creator (the student who organized it).
- *  - A course name/ID.
- *  - A scheduled time.
- *  - A list of participants (including the creator).
- *
+ * Represents a study session for a specific course.
+ * 
+ * A study session is created by a student (the creator) for a specific course
+ * at a scheduled time. Other students can be invited to join the session.
+ * Sessions have a maximum capacity of 5 participants.
+ * 
  * The class provides methods to:
- *  - Add classmates to the session.
- *  - Remove participants (except the creator).
- *  - Display session details (course, time, creator, participants).
- *
- * Example usage:
- *   StudySession session = new StudySession(alice, "CPSC 2150", "7:00 PM");
- *   session.addParticipant(bob);
- *   session.displaySessionInfo();
+ * - Add participants to the session (with availability checking)
+ * - Remove participants (except the creator)
+ * - Display session details
+ * 
+ * @author StudyBuddy Team
+ * @version 1.0
  */
-
 public class StudySession {
-    private Student creator;                // Who created the session
-    private String course;                  // Course name/ID
-    private String time;                    // Time of session
-    private List<Student> participants;     // Invited classmates
+    private static final int MAX_CAPACITY = 5;
+    
+    private Student creator;                // Student who created the session
+    private String course;                  // Course name or code
+    private String time;                    // Scheduled time (format: "DayOfWeek TimeSlot")
+    private List<Student> participants;     // List of all participants
 
-    // Constructor
+    /**
+     * Constructs a new StudySession.
+     * The creator is automatically added as the first participant.
+     * 
+     * @param creator The student creating the session
+     * @param course The course name or code (e.g., "CPSC 2150")
+     * @param time The scheduled time (e.g., "Monday 7PM-8PM")
+     */
     public StudySession(Student creator, String course, String time) {
         this.creator = creator;
         this.course = course;
         this.time = time;
         this.participants = new ArrayList<>();
-        this.participants.add(creator); // Creator is always part of the session
+        this.participants.add(creator);
     }
 
-    // Add a classmate, MAX CAPACITY = 5
+    /**
+     * Attempts to add a student to the study session.
+     * 
+     * The student will only be added if:
+     * - The session is not full (max 5 participants)
+     * - The student is not already in the session
+     * - The student is available at the session's time
+     * 
+     * @param student The student to add to the session
+     * @return A message indicating the result of the operation
+     */
     public String addParticipant(Student student) {
-        if (participants.size() >= 5) {
-            return "⚠️ This study session is already full (max 5 participants).";
+        if (participants.size() >= MAX_CAPACITY) {
+            return "⚠️ This study session is already full (max " + MAX_CAPACITY + " participants).";
         }
 
-        if (!participants.contains(student)) {
-            // Assume time is in format "DayOfWeek TimeSlot", e.g., "Monday 2PM-4PM"
-            String[] parts = time.split(" ", 2);
-            if (parts.length == 2 && student.isFreeAt(parts[0], parts[1])) {
-                participants.add(student);
-                return "✅ " + student.getName() + " has accepted the invitation and was added to the study session.";
-            } else {
-                return "❌ " + student.getName() + " has declined the invitation (not available at this time).";
-            }
-        } else {
+        if (participants.contains(student)) {
             return "⚠️ " + student.getName() + " is already in the study session.";
         }
+
+        // Parse time format: "DayOfWeek TimeSlot" (e.g., "Monday 2PM-4PM")
+        String[] parts = time.split(" ", 2);
+        if (parts.length == 2 && student.isFreeAt(parts[0], parts[1])) {
+            participants.add(student);
+            return "✅ " + student.getName() + " has accepted the invitation and was added to the study session.";
+        } else {
+            return "❌ " + student.getName() + " has declined the invitation (not available at this time).";
+        }
     }
 
-    // Remove a classmate
+    /**
+     * Removes a student from the study session.
+     * The creator cannot be removed from their own session.
+     * 
+     * @param student The student to remove
+     */
     public void removeParticipant(Student student) {
-        if (participants.contains(student) && !student.equals(creator)) {
+        if (student.equals(creator)) {
+            System.out.println("Cannot remove the creator from the study session.");
+        } else if (participants.contains(student)) {
             participants.remove(student);
             System.out.println(student.getName() + " has been removed from the study session.");
         } else {
-            System.out.println("Cannot remove " + student.getName() + ".");
+            System.out.println("Cannot remove " + student.getName() + " - not in the session.");
         }
     }
 
-    // Display session details
+    /**
+     * Displays detailed information about the study session to the console.
+     * Shows the course, time, creator, and all participants.
+     */
     public void displaySessionInfo() {
         System.out.println("Study Session for: " + course);
         System.out.println("Time: " + time);
         System.out.println("Creator: " + creator.getName());
-        System.out.println("Participants:");
-        for (Student s : participants) {
-            System.out.println(" - " + s.getName());
+        System.out.println("Participants (" + participants.size() + "/" + MAX_CAPACITY + "):");
+        for (Student student : participants) {
+            System.out.println(" - " + student.getName());
         }
     }
 
-    // Getters (if needed)
+    /**
+     * Gets the creator of the study session.
+     * @return The Student who created the session
+     */
     public Student getCreator() {
         return creator;
     }
 
+    /**
+     * Gets the course for this study session.
+     * @return The course name or code
+     */
     public String getCourse() {
         return course;
     }
 
+    /**
+     * Gets the scheduled time for this study session.
+     * @return The time string in format "DayOfWeek TimeSlot"
+     */
     public String getTime() {
         return time;
     }
 
+    /**
+     * Gets the list of all participants in the session.
+     * @return List of Student objects
+     */
     public List<Student> getParticipants() {
         return participants;
     }
-
 }

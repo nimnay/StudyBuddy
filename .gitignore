@@ -1,5 +1,6 @@
 # Compiled class file
 *.class
+
 # Ignore IntelliJ project files
 .idea/
 *.iml
@@ -7,6 +8,7 @@
 # Ignore compiled class files
 out/
 **/out/
+
 # Log file
 *.log
 
@@ -28,3 +30,47 @@ out/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Node.js dependencies
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+frontend/lerna-debug.log*
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Spring Boot
+*.tmp
+
+# IDE
+.vscode/
+*.swp
+*.swo
+*~
+
+# Database
+*.db
+*.sqlite
+*.h2.db
+
+# OS
+.DS_Store
+Thumbs.db
+

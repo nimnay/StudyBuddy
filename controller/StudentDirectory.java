@@ -6,38 +6,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * StudentDirectory manages all students in the app, including both real users
- * and preloaded fake classmates. This class provides methods to add, find, and
- * retrieve students, making it easy to integrate with StudySession for invitations.
- */
-
-
-/**
- * StudentDirectory manages all students in the app, including both real users
- * and preloaded fake classmates. Provides methods to add, find, and retrieve students.
+ * Manages all students in the StudyBuddy application.
+ * 
+ * The StudentDirectory provides a centralized location for managing both
+ * real users and preloaded sample students. It offers methods to add,
+ * find, and retrieve students, making it easy to integrate with other
+ * components like StudySession for invitations.
+ * 
+ * @author StudyBuddy Team
+ * @version 1.0
  */
 public class StudentDirectory {
-    /**
-     * List to store all students in the directory.
-     */
     private List<Student> students;
 
     /**
-     * Constructor initializes the students list.
+     * Constructs a new StudentDirectory with an empty student list.
      */
     public StudentDirectory() {
         this.students = new ArrayList<>();
     }
 
     /**
-     * Loads fake student data into the directory.
-     * For simplicity, fake students are hardcoded.
-     * Later, this could be replaced with reading from a JSON or CSV file.
-     */
-    /**
-     * Loads fake student data into the directory.
-     * For simplicity, fake students are hardcoded.
-     * Later, this could be replaced with reading from a JSON or CSV file.
+     * Loads sample student data into the directory.
+     * Creates 5 fake students with various majors, courses, and availabilities
+     * for testing and demonstration purposes.
+     * 
+     * In production, this could be replaced with loading from a database or file.
      */
     public void loadFakeStudents() {
         Student s1 = new Student("Bob", "Computer Science");
@@ -64,7 +58,6 @@ public class StudentDirectory {
         s5.addAvailability("Monday", "7PM-8PM");
         s5.addAvailability("Thursday", "1PM-3PM");
 
-        // Add fake students to directory
         students.add(s1);
         students.add(s2);
         students.add(s3);
@@ -72,25 +65,26 @@ public class StudentDirectory {
         students.add(s5);
     }
 
-
     /**
-     * Add a new student to the directory (e.g., real user creating a profile)
-     * @param student The Student to add
+     * Adds a new student to the directory.
+     * Used when a real user creates a profile.
+     * 
+     * @param student The Student object to add
      */
     public void addStudent(Student student) {
         students.add(student);
     }
 
-
     /**
-     * Find a student by name.
-     * @param name The student's name
-     * @return The Student object if found, otherwise null
+     * Finds a student by name (case-insensitive).
+     * 
+     * @param name The student's name to search for
+     * @return The Student object if found, null otherwise
      */
     public Student findStudentByName(String name) {
-        for (Student s : students) {
-            if (s.getName().equalsIgnoreCase(name)) {
-                return s;
+        for (Student student : students) {
+            if (student.getName().equalsIgnoreCase(name)) {
+                return student;
             }
         }
         return null;
@@ -103,68 +97,77 @@ public class StudentDirectory {
      * @return List of students enrolled in the course
      */
     public List<Student> findByCourse(String course) {
+    /**
+     * Finds all students enrolled in a specific course.
+     * 
+     * @param course The course code or name to search for
+     * @return List of students taking the specified course
+     */
+    public List<Student> getStudentsByCourse(String course) {
         List<Student> result = new ArrayList<>();
-        for (Student s : students) {
-            if (s.getCourses().contains(course)) {
-                result.add(s);
+        for (Student student : students) {
+            if (student.getCourses().contains(course)) {
+                result.add(student);
             }
         }
         return result;
     }
 
-
-
     /**
-     * Get all students in the directory.
-     * @return List of all students
+     * Gets all students in the directory.
+     * 
+     * @return List of all Student objects
      */
     public List<Student> getAllStudents() {
         return students;
     }
 
-
     /**
-     * Prints all students in the directory with their courses and availabilities.
+     * Prints all students in the directory with their details.
+     * Displays name, major, courses, and availabilities for each student.
      */
     public void printStudents() {
         if (students.isEmpty()) {
             System.out.println("No students in the directory.");
             return;
         }
-        for (Student s : students) {
-            System.out.println("Name: " + s.getName());
-            System.out.println("  Major: " + s.getMajor());
+        
+        for (Student student : students) {
+            System.out.println("Name: " + student.getName());
+            System.out.println("  Major: " + student.getMajor());
             System.out.print("  Courses: ");
-            if (s.getCourses().isEmpty()) {
+            
+            if (student.getCourses().isEmpty()) {
                 System.out.print("None");
             } else {
-                for (String c : s.getCourses()) {
-                    System.out.print(c + " ");
-                }
+                System.out.print(String.join(", ", student.getCourses()));
             }
+            
             System.out.println();
             System.out.print("  Availabilities: ");
-            if (s.getAvailabilities().isEmpty()) {
+            
+            if (student.getAvailabilities().isEmpty()) {
                 System.out.print("None");
             } else {
-                for (models.Availability a : s.getAvailabilities()) {
-                    System.out.print(a.toString() + " ");
+                for (models.Availability availability : student.getAvailabilities()) {
+                    System.out.print(availability.toString() + " ");
                 }
             }
             System.out.println("\n");
         }
     }
 
-     /**
-     * Returns a list of students with the specified major (case-insensitive).
+    /**
+     * Finds all students with a specific major (case-insensitive).
+     * 
      * @param major The major to search for
      * @return List of students with the given major
      */
     public List<Student> getStudentsByMajor(String major) {
         List<Student> result = new ArrayList<>();
-        for (Student s : students) {
-            if (s.getMajor().equalsIgnoreCase(major)) {
-                result.add(s);
+        for (Student student : students) {
+            if (student.getMajor().equalsIgnoreCase(major)) {
+                result.add(student);
             }
         }
         return result;
