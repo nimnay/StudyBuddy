@@ -50,9 +50,13 @@ StudyBuddy is a sleek, dark-themed web platform designed to help university stud
 
 ### Prerequisites
 - **Node.js** 18+ and npm installed
+- **Java** 11+ (for backend)
+- **Maven** 3.6+ (for backend)
 - Modern web browser (Chrome, Firefox, Safari, Edge)
 
 ### Installation & Running
+
+#### Option 1: Full Stack (Backend + Frontend)
 
 1. **Clone the repository**
    ```bash
@@ -60,7 +64,25 @@ StudyBuddy is a sleek, dark-themed web platform designed to help university stud
    cd studybuddy
    ```
 
-2. **Start the application**
+2. **Start both servers** (Windows)
+   ```bash
+   .\start-fullstack.bat
+   ```
+
+3. **Access the application**
+   - Frontend: `http://localhost:3000`
+   - Backend API: `http://localhost:8080/api`
+   - H2 Database Console: `http://localhost:8080/h2-console`
+
+#### Option 2: Frontend Only (Demo Mode)
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/nimnay/studybuddy.git
+   cd studybuddy
+   ```
+
+2. **Start frontend only**
    ```bash
    # Windows
    .\start-frontend.bat
@@ -72,8 +94,22 @@ StudyBuddy is a sleek, dark-themed web platform designed to help university stud
    ```
 
 3. **Open your browser**
-   - Navigate to `http://localhost:3000` (or the port shown in terminal)
-   - The app runs in demo mode with sample data
+   - Navigate to `http://localhost:3000`
+   - App runs in demo mode with sample data
+
+#### Option 3: Manual Setup
+
+**Backend:**
+```bash
+mvn spring-boot:run
+```
+
+**Frontend:**
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
 ## 🏗️ Project Structure
 
@@ -86,8 +122,17 @@ studybuddy/
 │   │   └── styles/          # CSS files with dark theme
 │   ├── package.json         # Frontend dependencies
 │   └── vite.config.js       # Vite configuration
-├── models/                   # Java backend models (future integration)
-├── start-frontend.bat       # Windows start script
+├── controller/              # Spring Boot REST API controllers
+│   ├── StudentController.java
+│   └── SessionController.java
+├── models/                  # Java backend data models
+│   ├── Student.java
+│   ├── StudySession.java
+│   └── Availability.java
+├── tests/                   # Backend unit tests
+├── start-frontend.bat       # Windows start script (frontend only)
+├── start-backend.bat        # Windows start script (backend only)
+├── start-fullstack.bat      # Windows start script (both servers)
 └── README.md                # This file
 ```
 
@@ -101,12 +146,32 @@ studybuddy/
 - ✅ Comprehensive search and filtering
 - ✅ Responsive mobile-friendly design
 - ✅ Rich mock data with 12+ students and sessions
+- ✅ Backend connection with automatic fallback
 
-### **Backend (Future Development)**
-- 📋 Java Spring Boot REST API (planned)
-- 📋 Database integration (planned)
+### **Backend (Implemented)**
+- ✅ Spring Boot 2.7 REST API
+- ✅ H2 in-memory database
+- ✅ Student and Session controllers
+- ✅ CORS configured for frontend
+- ✅ RESTful endpoints for CRUD operations
 - 📋 User authentication (planned)
 - 📋 Real-time notifications (planned)
+
+### **API Endpoints**
+
+**Students:**
+- `GET /api/students` - Get all students
+- `GET /api/students/{id}` - Get student by ID
+- `POST /api/students` - Create new student
+- `PUT /api/students/{id}` - Update student
+- `DELETE /api/students/{id}` - Delete student
+
+**Study Sessions:**
+- `GET /api/sessions` - Get all sessions
+- `GET /api/sessions/{id}` - Get session by ID
+- `POST /api/sessions` - Create new session
+- `PUT /api/sessions/{id}` - Update session
+- `DELETE /api/sessions/{id}` - Delete session
 
 ## 📱 Usage Guide
 
@@ -128,6 +193,15 @@ studybuddy/
 3. Sort results by various criteria (name, rating, sessions)
 4. Click "View Profile" for detailed student information
 
+### **Backend Connection**
+- The app automatically detects if the backend is running
+- If backend is unavailable, it falls back to demo mode with sample data
+- Click "Retry Connection" on the home page to reconnect
+- H2 Database Console credentials:
+  - JDBC URL: `jdbc:h2:mem:testdb`
+  - Username: `sa`
+  - Password: (leave blank)
+
 ## 🎨 Design Features
 
 - **Color Palette**: Professional dark theme with purple/blue accents
@@ -138,11 +212,19 @@ studybuddy/
 
 ## 🛠️ Technologies Used
 
-- **Frontend**: React 18, JavaScript ES6+, CSS3
-- **Build Tool**: Vite for fast development and building
-- **Router**: React Router for navigation
-- **Styling**: Custom CSS with CSS Variables
-- **Development**: Hot reload, ESLint, modern tooling
+### **Frontend**
+- React 18, JavaScript ES6+, CSS3
+- Vite for fast development and building
+- React Router for navigation
+- Axios for HTTP requests
+- Custom CSS with CSS Variables
+
+### **Backend**
+- Spring Boot 2.7
+- H2 In-memory Database
+- Maven for dependency management
+- RESTful API architecture
+- CORS configuration for cross-origin requests
 
 ## 📈 Sample Data
 
@@ -166,12 +248,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔮 Future Enhancements
 
-- Backend API integration with Java Spring Boot
-- User authentication and authorization
-- Real-time messaging and notifications
+- Advanced user authentication and authorization
+- Real-time messaging between study partners
+- Push notifications for session updates
 - Calendar integration for scheduling
-- Mobile app development
-- Advanced matching algorithms
+- Mobile app development (React Native)
+- Advanced matching algorithms based on learning styles
+- Session recording and note-sharing features
+- Integration with university LMS systems
 
 ---
 

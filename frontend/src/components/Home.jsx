@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { studentService, sessionService } from '../services/api'
+import { studentService, sessionService, getBackendStatus, retryBackendConnection } from '../services/api'
 import './Home.css'
 
 function Home() {
@@ -75,6 +75,14 @@ function Home() {
     { icon: '📊', label: 'View Stats', link: '#stats' },
   ]
 
+  const handleRetryBackend = async () => {
+    const connected = await retryBackendConnection();
+    if (connected) {
+      setDemoMode(false);
+      fetchStats(); // Refresh stats from backend
+    }
+  };
+
   return (
     <div className="home">
       {demoMode && (
@@ -83,11 +91,11 @@ function Home() {
             <span className="demo-icon">🚀</span>
             <div>
               <strong>Demo Mode Active</strong>
-              <p>Backend not available - showcasing with sample data</p>
+              <p>Backend not available - showcasing with sample data. Start backend with: start-backend.bat</p>
             </div>
-            <Link to="/CURRENT_STATUS.md" className="demo-link">
-              Setup Guide →
-            </Link>
+            <button onClick={handleRetryBackend} className="demo-link" style={{ cursor: 'pointer' }}>
+              Retry Connection →
+            </button>
           </div>
         </div>
       )}

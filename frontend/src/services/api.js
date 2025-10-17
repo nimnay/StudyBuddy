@@ -12,10 +12,34 @@ const api = axios.create({
 });
 
 // Flag to track if backend is available
-let backendAvailable = true;
+let backendAvailable = null; // null = not checked yet, true/false = checked
+
+// Check backend availability
+const checkBackendAvailability = async () => {
+  try {
+    await axios.get(`${API_BASE_URL}/students`, { timeout: 2000 });
+    backendAvailable = true;
+    console.log('✅ Backend connected successfully');
+    return true;
+  } catch (error) {
+    backendAvailable = false;
+    console.log('⚠️ Backend unavailable - using demo mode');
+    return false;
+  }
+};
+
+// Initialize backend check
+if (backendAvailable === null) {
+  checkBackendAvailability();
+}
 
 // Helper function to handle API calls with fallback to mock data
 const apiCall = async (apiFunction, mockData) => {
+  // First time check
+  if (backendAvailable === null) {
+    await checkBackendAvailability();
+  }
+
   if (!backendAvailable) {
     console.log('🔄 Using mock data (backend not available)');
     return { data: mockData };
@@ -23,6 +47,11 @@ const apiCall = async (apiFunction, mockData) => {
   
   try {
     const result = await apiFunction();
+    // Backend is working
+    if (backendAvailable === false) {
+      backendAvailable = true;
+      console.log('✅ Backend reconnected!');
+    }
     return result;
   } catch (error) {
     console.warn('⚠️ Backend unavailable, falling back to mock data');
@@ -87,6 +116,15 @@ export const sessionService = {
     () => api.get(`/sessions/search?course=${course}`),
     mockSessions.filter(s => s.course.toLowerCase().includes(course.toLowerCase()))
   ),
+};
+
+// Utility to check backend status
+export const getBackendStatus = () => backendAvailable;
+
+// Utility to retry backend connection
+export const retryBackendConnection = async () => {
+  console.log('🔄 Retrying backend connection...');
+  return await checkBackendAvailability();
 };
 
 export default api;
