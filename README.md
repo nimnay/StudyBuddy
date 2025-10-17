@@ -10,7 +10,6 @@
 
 StudyBuddy is a sleek, dark-themed web platform designed to help university students connect with classmates, form study groups, and organize collaborative learning sessions. Built with modern React and featuring a professional user interface.
 
-![StudyBuddy Preview](https://via.placeholder.com/800x400/1a1a2e/ffffff?text=StudyBuddy+Dark+Theme)
 
 ## ✨ Features
 
